@@ -1,0 +1,18 @@
+name = "caju-agents"
+main = "src/index.ts"
+compatibility_date = "2026-07-01"
+workers_dev = false
+
+routes = [
+  { pattern = "media.cajuos.dev", custom_domain = true }
+]
+
+[vars]
+ALLOWED_ORIGIN = "https://agents.cajuos.dev"
+
+[[kv_namespaces]]
+binding = "AGENTS_CACHE"
+id = "72fced74b54e4591aa49ac2c803fe39c"
+
+[limits]
+subrequest_limit = 1000

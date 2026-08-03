@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ── Design tokens (dark-first: este site é sempre escuro) ── */
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --muted: #a1a1aa;
+  --border: #27272a;
+  --card: #111111;
+  --accent: #dc2626;
+
+  /* Emil easing: ease-out quartico */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --ease-out: var(--ease-out);
+  --ease-in-out: var(--ease-in-out);
+}
+
+html {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Press state (microfeedback tatil) ── */
+.pressable {
+  transition: transform 160ms var(--ease-out);
+}
+.pressable:active {
+  transform: scale(0.97);
+}
+
+/* ── Hover + press combinados, so em desktop ── */
+@media (hover: hover) and (pointer: fine) {
+  .hover-link {
+    transition: color 150ms var(--ease-out), transform 160ms var(--ease-out);
+  }
+  .hover-link:hover {
+    color: var(--foreground);
+  }
+}
+.hover-link:active {
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hover-link {
+    transition: none;
+  }
+  .hover-link:active {
+    transform: none;
+  }
+}
+
+/* ── Card hover refinado ── */
+.card-hover {
+  transition:
+    border-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+}
+.card-hover:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-hover:hover {
+    border-color: var(--foreground);
+    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.04);
+    transform: translateY(-1px);
+  }
+}
+
+/* ── Stagger entrance ── */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeSlideUp 500ms var(--ease-out) both;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .pressable,
+  .hover-link,
+  .card-hover {
+    transition: none;
+  }
+  .animate-in {
+    animation: none;
+  }
+}
